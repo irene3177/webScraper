@@ -27,7 +27,10 @@ async function hasDynamicContent(html) {
 //     '.js-pull-requests',          // For pull requests
 //     '.js-navigation-enable',      // For navigation enable indications
 // ];
-  
+
+// if (dynamicIndicators.some(selector => $(selector).length > 0 && $(selector).is(':empty'))) {
+//   isDynamic = true;
+// }
   // Check for JavaScript code indicating dynamic loading
   scripts.each((i, script) => {
     const scriptContent = $(script).html();
@@ -36,9 +39,6 @@ async function hasDynamicContent(html) {
     }
   });
 
-  // if (dynamicIndicators.some(selector => $(selector).length > 0 && $(selector).is(':empty'))) {
-  //   isDynamic = true;
-  // }
   return isDynamic;
 }
 

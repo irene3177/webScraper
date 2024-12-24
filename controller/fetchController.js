@@ -1,13 +1,26 @@
+const e = require('express');
 const htmlService = require('../services/htmlService');
 
-exports.fetchUrl = async (req, res) => {
-  const { targetUrl } = req.body;
+function createError(message, statusCode) {
+  const error = new Error(message);
+  error.statusCode = statusCode;
+  return error;
+}
 
-  if(!targetUrl) {
-    return res.status(400).json({ error: 'Target URL is required' });
-  }
-
+exports.fetchUrl = async (req, res, next) => {
   try {
+    const { targetUrl } = req.body;
+
+    if(!targetUrl) {
+      return next(createError('Target URL is required', 400));
+    }
+
+    try{ 
+      new URL(targetUrl);
+    } catch {
+      return next(createError('Invalid URL', 400));
+    }
+
     const { links, htmlFilePath } = await htmlService.fetchAndProcessHtml(targetUrl);
 
     res.status(200).json({
@@ -16,6 +29,6 @@ exports.fetchUrl = async (req, res) => {
     });
 
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while fetching the URL' });
-  }
+      return next(error);
+    }
 };
