@@ -1,14 +1,13 @@
-const { constants } = require('http2');
+import { constants } from 'http2';
 
 // Define NotFoundError class
 class NotFoundError extends Error {
-    constructor(message) {
+    public statusCode: number;
+    
+    constructor(message: string) {
         super(message);
         this.statusCode = constants.HTTP_STATUS_NOT_FOUND; 
     }
 }
 
-
-module.exports = {
-    NotFoundError,
-};
+export default NotFoundError;
