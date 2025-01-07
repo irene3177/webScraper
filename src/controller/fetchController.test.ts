@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from 'express';
-import fetchController from './fetchController'; // Adjust the path as necessary
-import { fetchAndProcessHtml } from '../services/htmlService'; // Adjust the path as necessary
+import fetchController from './fetchController';
+import { fetchAndProcessHtml } from '../services/htmlService';
 import { createError } from '../utils/errorUtils';
 
 jest.mock('../services/htmlService', () => ({

@@ -2,7 +2,7 @@ import 'dotenv/config';
 import express from 'express';
 import fetchController from './controller/fetchController';
 import errorHandler from './middleware/errorHandler';
-import notFoundHandler from './middleware/notFound';
+import notFoundHandler from './middleware/notFoundHandler';
 import { requestLogger, errorLogger } from './middleware/logger';
 
 const app = express();

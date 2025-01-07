@@ -31,16 +31,15 @@ export async function hasDynamicContent(html: string): Promise<boolean> {
  * @returns True if any dynamic indicators are found, otherwise false.
  */
 function checkDynamicScripts(scripts: cheerio.Cheerio, $: cheerio.CheerioAPI): boolean {
+  //for (const script of scripts.toArray()) {
+  scripts.each((_, script) => {
+    const scriptContent = $(script).html() || "";
 
-  for (const script of scripts.toArray()) {
-      const scriptContent = $(script).html() || "";
-
-      // Check for fetch, XMLHttpRequest, or URLs
-      if (scriptContent.includes('fetch') || scriptContent.includes('XMLHttpRequest') || scriptContent.match(URL_PATTERN)) {
-          console.log('Dynamic content found in script content');
-          return true; // Return as soon as dynamic content is detected
-      }
-  }
+    // Check for fetch, XMLHttpRequest, or URLs
+    if (scriptContent.includes('fetch') || scriptContent.includes('XMLHttpRequest') || scriptContent.match(URL_PATTERN)) {
+      return true; // Return as soon as dynamic content is detected
+    }
+  });
 
   return false; // No dynamic content found in scripts
 }
