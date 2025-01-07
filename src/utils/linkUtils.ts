@@ -10,16 +10,23 @@ function isValidDomain(domain: string): boolean {
 /**
  * Extracts links from HTML content, with an optional limit on the number of links.
  * @param html - The HTML content to extract links from.
- * @param maxLinks - Optional limit on the number of links to extract.
+ * @param linksLimit - Optional limit on the number of links to extract.
  * @returns An array of extracted links.
  */
-export function extractLinksFromHtml(html: string, maxLinks?: number): string[] {
+export function extractLinksFromHtml(html: string, linksLimit?: number): string[] {
   const $ = loadCheerio(html);
-  const links = $('a').map((_: any, anchor: any) => $(anchor).attr('href')).get();
+  const links: string[] = [];
   
-  if (maxLinks && maxLinks > 0) {
-    return links.slice(0, maxLinks);
-  }
+  $('a').each((_: number, anchor: any) => {
+    if (linksLimit && links.length >= linksLimit) {
+      return false; // Break out of the loop when limit is reached
+    }
+
+    const href = $(anchor).attr('href');
+    if (href) {
+      links.push(href);
+    }
+  });
   
   return links;
 }

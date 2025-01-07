@@ -12,10 +12,11 @@ import { filterLinksByDomain, extractLinksFromHtml } from '../utils/linkUtils';
  * Fetches HTML content from the specified URL and processes it.
  * 
  * @param targetUrl - The URL to be scraped.
+ * @param linksLimit - Optional limit on the number of links to extract.
  * @returns An object containing the extracted links and path to the saved HTML file.
  * @throws NotFoundError if the URL cannot be fetched.
  */
-async function fetchAndProcessHtml(targetUrl: string) {
+async function fetchAndProcessHtml(targetUrl: string, linksLimit?: number) {
   try {
     const html = await fetchHtml(targetUrl);
     const websiteName = new URL(targetUrl).hostname.replace('www.', '');
@@ -27,7 +28,7 @@ async function fetchAndProcessHtml(targetUrl: string) {
     const finalHtml = await processDynamicContent(targetUrl, html);
     await saveHtmlToFile(finalHtml, htmlFilePath);
   
-    const links = extractLinksFromHtml(finalHtml); // Extract links from the final HTML
+    const links = extractLinksFromHtml(finalHtml, linksLimit); // Extract links from the final HTML
     const filteredLinks = filterLinksByDomain(links, targetUrl); // Filter links by domain
   
     return { links: filteredLinks, htmlFilePath }; // Return the results
