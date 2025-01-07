@@ -18,7 +18,7 @@ Scrapes the specified URL and returns the extracted links.
 ```json
 {
   "targetUrl": "http://example.com",
-  "linksLimit": 2
+  "linksLimit": 2 // Optional: Limits the number of links extracted
 }
 ```
 #### Response Format:
