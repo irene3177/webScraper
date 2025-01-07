@@ -15,7 +15,8 @@ POST /scrape: Scrapes the specified URL and returns the extracted links.
 Request Format:
 
 {
-  "url": "http://example.com"
+  "targetUrl": "http://example.com",
+  "linksLimit": 2
 }
 
 Response Format:
